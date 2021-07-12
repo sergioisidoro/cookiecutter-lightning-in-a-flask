@@ -8,3 +8,5 @@
 - We use postgres. I think by now this shouldn't be an oppinion that for most production and long term web development SQL and Postgres are probably the most solid solution.
 
 - Production ready with WSGI, and dev environment with docker-compose.override.
+
+- There has been huge debate about using JWT for session storage. Blacklisting tokens is a bit of a hack to prematurely optmisie inserts. Here we go for a full fledged server side session storage.

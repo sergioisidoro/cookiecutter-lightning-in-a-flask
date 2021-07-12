@@ -9,8 +9,17 @@ gunicorn = "*"
 flask-sqlalchemy = "*"
 flask-restful = "*"
 flask-migrate = "*"
+passlib = "*"
 
 [dev-packages]
+pytest = "*"
+python-dotenv = "*"
+flake8 = "*"
+pytest-flask = "*"
+pytest-runner = "*"
+pytest-factoryboy = "*"
+pytest-celery = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.9"

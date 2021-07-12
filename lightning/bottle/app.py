@@ -1,6 +1,7 @@
 from flask import Flask
 from bottle.db import db
 from bottle.extensions import migrate
+from bottle.manage import admin
 
 
 def create_app(testing=False):
@@ -16,6 +17,7 @@ def create_app(testing=False):
     configure_apispec(app)
     register_blueprints(app)
     init_taks_runner(app)
+    init_cli(app)
 
     @app.route("/")
     def hello_world():
@@ -46,3 +48,8 @@ def register_blueprints(app):
 def init_taks_runner(app=None):
     """Init async job executor"""
     pass
+
+
+def init_cli(app=None):
+    """Init async job executor"""
+    app.cli.add_command(admin)
