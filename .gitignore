@@ -1,3 +1,4 @@
 notes
 Pipfile.lock
 production.env
+__pycache__

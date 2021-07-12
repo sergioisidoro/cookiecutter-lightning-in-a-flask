@@ -1,4 +1,6 @@
 from flask import Flask
+from bottle.db import db
+from bottle.extensions import migrate
 
 
 def create_app(testing=False):
@@ -9,6 +11,7 @@ def create_app(testing=False):
     if testing is True:
         app.config["TESTING"] = True
 
+    configure_database(app)
     configure_extensions(app)
     configure_apispec(app)
     register_blueprints(app)
@@ -20,9 +23,14 @@ def create_app(testing=False):
     return app
 
 
+def configure_database(app):
+    """configure database"""
+    db.init_app(app)
+
+
 def configure_extensions(app):
     """configure flask extensions"""
-    pass
+    migrate.init_app(app, db)
 
 
 def configure_apispec(app):
