@@ -2,6 +2,7 @@ from flask import Flask
 from bottle.db import db
 from bottle.extensions import migrate, api
 from bottle.manage import admin
+from bottle.api import register_api_blueprints
 
 
 def create_app(testing=False):
@@ -43,7 +44,7 @@ def configure_apispec(app):
 
 def register_blueprints(app):
     """register all blueprints for application"""
-    pass
+    register_api_blueprints(api)
 
 
 def init_taks_runner(app=None):

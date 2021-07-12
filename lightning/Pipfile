@@ -12,6 +12,9 @@ flask-migrate = "*"
 passlib = "*"
 sqlalchemy-utils = "*"
 flask-smorest = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pytest = "*"

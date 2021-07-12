@@ -1,6 +1,6 @@
 import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy_utils import UUIDType
+# from sqlalchemy_utils import UUIDType
 
 from bottle.db import db
 from bottle.extensions import pwd_context
@@ -8,7 +8,9 @@ from bottle.extensions import pwd_context
 
 class UserSession(db.Model):
     """A user session login attempt and token holder"""
-    id = db.Column(UUIDType(binary=False), primary_key=True)
+    # id = db.Column(UUIDType(binary=False), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref='sessions', lazy=True)
     success = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)

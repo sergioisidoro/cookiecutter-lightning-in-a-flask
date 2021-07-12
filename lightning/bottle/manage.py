@@ -13,15 +13,15 @@ def admin():
 @click.option('--password', prompt=True)
 def create_admin(email, password):
     """Create a new admin user"""
-    from bottle.extensions import db
+    from bottle.db import db
     from bottle.models import User
 
-    click.echo("New admin user setup")
+    click.echo("Creating...")
 
     user = User(email=email, password=password, active=True, admin=True)
     db.session.add(user)
     db.session.commit()
-    click.echo("Created admin")
+    click.echo("Admin created")
 
 
 if __name__ == "__main__":

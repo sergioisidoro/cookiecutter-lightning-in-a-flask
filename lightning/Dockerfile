@@ -4,7 +4,7 @@ RUN mkdir /code
 WORKDIR /code
 
 RUN apk update --no-cache && \
-    apk add --no-cache build-base
+    apk add --no-cache build-base postgresql-dev gcc python3-dev musl-dev
 
 COPY bottle bottle/
 COPY migrations migrations/
