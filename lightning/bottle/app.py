@@ -1,6 +1,6 @@
 from flask import Flask
 from bottle.db import db
-from bottle.extensions import migrate
+from bottle.extensions import migrate, api
 from bottle.manage import admin
 
 
@@ -33,6 +33,7 @@ def configure_database(app):
 def configure_extensions(app):
     """configure flask extensions"""
     migrate.init_app(app, db)
+    api.init_app(app)
 
 
 def configure_apispec(app):
