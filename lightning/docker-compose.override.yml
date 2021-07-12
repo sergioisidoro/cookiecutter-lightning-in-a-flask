@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    webservice:
+        image: bottle
+        build: .
+        command: flask run -h 0.0.0.0
+        env_file:
+            - dev.env
+        volumes:
+            - ./bottle:/code/bottle
+            - ./migrations:/code/migrations
+        ports:
+            - "5000:5000"
+        depends_on:
+            - database
+
+    database:
+        image: postgres
+        volumes:
+            - database-data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=lightning
+            - POSTGRES_PASSWORD=lightning
+            - POSTGRES_DB=bottle
+
+volumes:
+    database-data:
