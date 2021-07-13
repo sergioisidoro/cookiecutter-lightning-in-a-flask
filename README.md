@@ -3,7 +3,7 @@
 
 
 ## Oppinions
-- We use Pipenv. This is controversial, but it's time for a decent package manager in Python and proper version locking to use in production.
+- We use Pipenv. This is controversial, but it's time for a decent package manager in Python and proper version locking to use in production. PDM is nice for isolated environemtns, but not nice for Docker and executables (like 'flask' executable). Since we don't add requirements that often we can live with the pain of the slow speeds and caching.
 
 - We use postgres. I think by now this shouldn't be an oppinion that for most production and long term web development SQL and Postgres are probably the most solid solution.
 
