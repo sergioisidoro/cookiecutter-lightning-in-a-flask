@@ -1,18 +1,18 @@
 from bottle.models import User
 from bottle.db import db
 from bottle.extensions import ma
+from bottle.api.utils import AutoSchema
 
 
-class UserSchema(ma.SQLAlchemyAutoSchema):
+class UserSchema(AutoSchema):
 
     id = ma.Int(dump_only=True)
     admin = ma.Bool(dump_only=True)
-    password = ma.String(load_only=True, required=True)
+    password = ma.String(required=True)
 
     class Meta:
         model = User
         sqla_session = db.session
-        load_instance = True
         exclude = ("_password",)
 
 

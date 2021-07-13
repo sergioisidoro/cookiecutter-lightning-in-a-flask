@@ -12,8 +12,28 @@ users_api_blueprint = Blueprint(
     description='Operations on users'
 )
 
+
+@users_api_blueprint.route('/')
+class Users(MethodView):
+
+    @users_api_blueprint.arguments(UserQueryArgsSchema)
+    @users_api_blueprint.response(200, UserSchema(many=True))
+    def get(self, args):
+        """List users"""
+        return User.query.filter_by(**args)
+
+    @users_api_blueprint.arguments(UserSchema)
+    @users_api_blueprint.response(201, UserSchema)
+    def post(self, new_data):
+        """Add a new user"""
+        user = User(**new_data)
+        db.session.add(user)
+        db.session.commit()
+        return user
+
+
 @users_api_blueprint.route('/<user_id>')
-class CurrentUser(MethodView):
+class UserById(MethodView):
 
     decorators = [jwt_required()]
 
@@ -27,7 +47,7 @@ class CurrentUser(MethodView):
     def put(self, update_data, user_id):
         """Update existing user"""
         user = User.query.get_or_404(user_id)
-        users_api_blueprint.check_etag(user, UserSchema)
+        # users_api_blueprint.check_etag(user, UserSchema)
         UserSchema().update(user, update_data)
         db.session.add(user)
         db.session.commit()
@@ -37,6 +57,6 @@ class CurrentUser(MethodView):
     def delete(self, user_id):
         """Delete user"""
         user = User.query.get_or_404(user_id)
-        users_api_blueprint.check_etag(user, UserSchema)
+        # users_api_blueprint.check_etag(user, UserSchema)
         db.session.delete(user)
         db.session.commit()
