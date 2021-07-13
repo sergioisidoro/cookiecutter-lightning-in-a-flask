@@ -15,6 +15,7 @@ flask-smorest = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 psycopg2-binary = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 pytest = "*"

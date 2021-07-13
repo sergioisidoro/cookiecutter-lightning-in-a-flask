@@ -1,6 +1,7 @@
 from flask import Flask
 from bottle.db import db
-from bottle.extensions import migrate, api
+from bottle import auth
+from bottle.extensions import migrate, api, jwt
 from bottle.manage import admin
 from bottle.api import register_api_blueprints
 
@@ -35,6 +36,7 @@ def configure_extensions(app):
     """configure flask extensions"""
     migrate.init_app(app, db)
     api.init_app(app)
+    jwt.init_app(app)
 
 
 def configure_apispec(app):
@@ -44,6 +46,7 @@ def configure_apispec(app):
 
 def register_blueprints(app):
     """register all blueprints for application"""
+    app.register_blueprint(auth.views.blueprint)
     register_api_blueprints(api)
 
 

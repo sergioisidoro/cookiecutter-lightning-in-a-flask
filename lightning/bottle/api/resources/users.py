@@ -1,5 +1,6 @@
 from flask.views import MethodView
-from flask_smorest import Blueprint, abort
+from flask_smorest import Blueprint
+from flask_jwt_extended import jwt_required
 
 from bottle.db import db
 
@@ -11,28 +12,10 @@ users_api_blueprint = Blueprint(
     description='Operations on users'
 )
 
-
-@users_api_blueprint.route('/')
-class Users(MethodView):
-
-    @users_api_blueprint.arguments(UserQueryArgsSchema, location='query')
-    @users_api_blueprint.response(200, UserSchema(many=True))
-    def get(self, args):
-        """List users"""
-        return User.query.filter_by(**args)
-
-    @users_api_blueprint.arguments(UserSchema)
-    @users_api_blueprint.response(201, UserSchema)
-    def post(self, new_data):
-        """Add a new user"""
-        user = User(**new_data)
-        db.session.add(user)
-        db.session.commit()
-        return user
-
-
 @users_api_blueprint.route('/<user_id>')
-class PetsById(MethodView):
+class CurrentUser(MethodView):
+
+    decorators = [jwt_required()]
 
     @users_api_blueprint.response(200, UserSchema)
     def get(self, user_id):
