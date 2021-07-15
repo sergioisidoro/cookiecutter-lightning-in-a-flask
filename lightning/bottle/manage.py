@@ -3,11 +3,11 @@ from flask.cli import with_appcontext
 
 
 @click.group()
-def admin():
+def manage():
     """Administration of the flask App"""
 
 
-@admin.command("create-admin")
+@manage.command("create-admin")
 @with_appcontext
 @click.option('--email', prompt=True)
 @click.option('--password', prompt=True)
@@ -25,4 +25,4 @@ def create_admin(email, password):
 
 
 if __name__ == "__main__":
-    admin()  # pragma: no cover
+    manage()  # pragma: no cover

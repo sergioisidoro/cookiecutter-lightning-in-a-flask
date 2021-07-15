@@ -2,8 +2,10 @@ from flask import Flask
 from bottle.db import db
 from bottle import auth
 from bottle.extensions import migrate, api, jwt, jwt_pundit
-from bottle.manage import admin
+from bottle.admin import admin
+from bottle.manage import manage
 from bottle.api import register_api_blueprints
+
 
 def create_app(testing=False):
     """Application factory, used to create application"""
@@ -38,6 +40,7 @@ def configure_extensions(app):
     api.init_app(app)
     jwt.init_app(app)
     jwt_pundit.init_app(app)
+    admin.init_app(app)
 
 
 def configure_apispec(app):
@@ -58,4 +61,4 @@ def init_taks_runner(app=None):
 
 def init_cli(app=None):
     """Init async job executor"""
-    app.cli.add_command(admin)
+    app.cli.add_command(manage)

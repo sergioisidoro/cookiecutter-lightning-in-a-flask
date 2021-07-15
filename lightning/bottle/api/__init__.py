@@ -7,7 +7,6 @@ root_api_blueprint = Blueprint(
     description='RootApi'
 )
 
-
 @root_api_blueprint.before_request
 @jwt_required(optional=True)
 def before_request():

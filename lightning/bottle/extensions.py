@@ -10,7 +10,6 @@ from flask_jwt_extended import JWTManager, current_user
 from flask_smorest import Api
 from flask_pundit import FlaskPundit
 
-
 class JWTFlaskPundit(FlaskPundit):
     """
     A Wrapper around Flask Pundit so it works with Flask JWT extended,

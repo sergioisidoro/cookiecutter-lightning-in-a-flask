@@ -19,6 +19,7 @@ flask-jwt-extended = "*"
 flask-pundit = {editable = true, git = "https://github.com/sergioisidoro/flask-pundit"}
 pytest-cov = "*"
 freezegun = "*"
+flask-admin = "*"
 
 [dev-packages]
 pytest = "*"

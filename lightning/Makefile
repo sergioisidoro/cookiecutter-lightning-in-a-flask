@@ -4,7 +4,7 @@ init:  build
 	docker-compose run --rm webservice flask db init
 	docker-compose run --rm webservice flask db migrate
 	docker-compose run --rm webservice flask db upgrade
-	docker-compose run --rm webservice flask admin create-admin
+	docker-compose run --rm webservice flask manage create-admin
 	@echo "Init done, containers running"
 
 build:
