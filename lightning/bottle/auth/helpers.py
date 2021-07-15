@@ -14,7 +14,7 @@ from bottle.models.user import UserSession
 
 def refresh_session(user, refresh_jti):
     session = UserSession.query.filter_by(refresh_token_id=refresh_jti).one()
-    if session.revoked:
+    if session.is_invalid():
         return None
     else:
         session.refreshe += 1
@@ -57,7 +57,7 @@ def is_token_revoked(jwt_headers, jwt_payload):
             session = UserSession.query.filter_by(refresh_token_id=jti).one()
         else:
             session = UserSession.query.filter_by(token_id=jti).one()
-        return session.revoked
+        return session.is_invalid()
     except NoResultFound:
         return True
 

@@ -10,21 +10,23 @@ class UserPolicy(SQLAlchemyPolicy):
         return self.is_admin_or_self()
 
     def create(self):
-        return self.is_admin_or_self()
+        # Users should be able register
+        return True
 
     def update(self):
         return self.is_admin_or_self()
 
-    def list(self):
-        return self.user.admin
-
     def delete(self):
-        return self.is_admin_or_self()
+        # For integrity issues, logged in users should not be able to delete
+        # themselves.
+        return self.user.admin and self.user.id != self.resource.id
 
     def scope(self):
         if self.user.admin:
             return self.resource.query
-        return self.resource.query.filter_by(id)
+        # Add here what other usesrs a user is allowed to see.
+        # By default users are only allowed to list themselves
+        return self.resource.query.filter_by(id=self.user.id)
 
     # HELPERS
     def is_admin_or_self(self):

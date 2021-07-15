@@ -20,7 +20,7 @@ blueprint = Blueprint("auth", __name__, url_prefix="/auth")
 
 @blueprint.route("/login", methods=["POST"])
 def login():
-    if not request.is_json:
+    if not request.is_json or isinstance(request.json, str):
         return jsonify({"msg": "Not a JSON in request"}), 400
 
     email = request.json.get("email", None)

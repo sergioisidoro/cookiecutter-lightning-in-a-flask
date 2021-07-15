@@ -17,6 +17,8 @@ marshmallow-sqlalchemy = "*"
 psycopg2-binary = "*"
 flask-jwt-extended = "*"
 flask-pundit = {editable = true, git = "https://github.com/sergioisidoro/flask-pundit"}
+pytest-cov = "*"
+freezegun = "*"
 
 [dev-packages]
 pytest = "*"
@@ -27,6 +29,8 @@ pytest-runner = "*"
 pytest-factoryboy = "*"
 pytest-celery = "*"
 factory-boy = "*"
+pytest-cov = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.9"

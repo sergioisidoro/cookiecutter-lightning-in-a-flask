@@ -25,4 +25,4 @@ def create_admin(email, password):
 
 
 if __name__ == "__main__":
-    admin()
+    admin()  # pragma: no cover
