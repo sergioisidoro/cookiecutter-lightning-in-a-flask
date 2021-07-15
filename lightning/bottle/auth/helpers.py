@@ -14,12 +14,17 @@ from bottle.models.user import UserSession
 
 def refresh_session(user, refresh_jti):
     session = UserSession.query.filter_by(refresh_token_id=refresh_jti).one()
-    if session.is_invalid():
+    if not session.refreshable():
         return None
     else:
-        session.refreshe += 1
-        db.session.commit()
         new_token = create_access_token(identity=user)
+        session.refreshes += 1
+        session.token_id = get_jti(new_token)
+        session.valid_until = (
+            datetime.datetime.utcnow() +
+            app.config["JWT_ACCESS_TOKEN_EXPIRES"]
+        )
+        db.session.commit()
         return new_token
 
 

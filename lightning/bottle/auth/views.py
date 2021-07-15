@@ -3,6 +3,7 @@ from flask_jwt_extended import (
     jwt_required,
     get_jwt_identity,
     get_jwt,
+    current_user
 )
 
 from bottle.models import User
@@ -46,13 +47,12 @@ def login():
 @jwt_required(refresh=True)
 def refresh():
     jti = get_jwt()["jti"]
-    current_user = get_jwt_identity()
     access_token = refresh_session(current_user, jti)
     if access_token:
         ret = {"access_token": access_token}
         return jsonify(ret), 200
     else:
-        return "Unauthorised", 402
+        return "Unauthorised", 401
 
 
 @blueprint.route("/revoke_access", methods=["DELETE"])

@@ -18,8 +18,13 @@ class UserSession(db.Model):
     refreshable_unil = db.Column(db.DateTime)
     refreshes = db.Column(db.Integer, default=0)
 
+    # TODO: Include server_side valid_until and refreshable_unil
+    # validation
     def is_invalid(self):
         return self.revoked
+
+    def refreshable(self):
+        return not self.revoked
 
 
 class User(db.Model):
