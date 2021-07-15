@@ -1,10 +1,9 @@
 from flask import Flask
 from bottle.db import db
 from bottle import auth
-from bottle.extensions import migrate, api, jwt
+from bottle.extensions import migrate, api, jwt, jwt_pundit
 from bottle.manage import admin
 from bottle.api import register_api_blueprints
-
 
 def create_app(testing=False):
     """Application factory, used to create application"""
@@ -24,6 +23,7 @@ def create_app(testing=False):
     @app.route("/")
     def hello_world():
         return "⚡️⚗️⚡️"
+
     return app
 
 
@@ -37,6 +37,7 @@ def configure_extensions(app):
     migrate.init_app(app, db)
     api.init_app(app)
     jwt.init_app(app)
+    jwt_pundit.init_app(app)
 
 
 def configure_apispec(app):

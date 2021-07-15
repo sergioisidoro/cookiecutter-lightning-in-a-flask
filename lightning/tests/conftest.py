@@ -46,6 +46,38 @@ def admin_user(db):
 
 
 @pytest.fixture
+def common_user(db):
+    user = User(
+        email='plain-user@superhotmail.com',
+        password='Hunter2',
+        admin=False
+    )
+
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
+@pytest.fixture
+def user_headers(common_user, client):
+    data = {
+        'email': common_user.email,
+        'password': 'Hunter2'
+    }
+    rep = client.post(
+        '/auth/login',
+        data=json.dumps(data),
+        headers={'content-type': 'application/json'}
+    )
+
+    tokens = json.loads(rep.get_data(as_text=True))
+    return {
+        'content-type': 'application/json',
+        'authorization': 'Bearer %s' % tokens['access_token']
+    }
+
+
+@pytest.fixture
 def admin_headers(admin_user, client):
     data = {
         'email': admin_user.email,

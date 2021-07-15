@@ -2,7 +2,10 @@
 """
 import datetime
 from flask import current_app as app
-from flask_jwt_extended import (create_access_token, create_refresh_token, get_jti)
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token, get_jti
+)
 from sqlalchemy.orm.exc import NoResultFound
 
 from bottle.db import db
