@@ -12,11 +12,13 @@ from bottle.auth.helpers import (
   revoke_token,
   revoke_refresh_token,
   is_token_revoked,
-  create_session_and_session_token,
+  build_login_success_response,
   refresh_session
 )
+from bottle.auth.openid_blueprint import open_id_blueprint
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
+blueprint.register_blueprint(open_id_blueprint)
 
 
 @blueprint.route("/login", methods=["POST"])
@@ -33,13 +35,8 @@ def login():
     if user is None or not pwd_context.verify(password, user.password):
         return jsonify({"msg": "Bad credentials"}), 400
 
-    (access_token, refresh_token) = create_session_and_session_token(user)
+    result = build_login_success_response(user)
 
-    result = {
-      "user_id": user.id,
-      "access_token": access_token,
-      "refresh_token": refresh_token
-    }
     return jsonify(result), 200
 
 

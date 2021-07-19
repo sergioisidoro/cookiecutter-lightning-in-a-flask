@@ -8,7 +8,10 @@ from passlib.context import CryptContext
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager, current_user
 from flask_smorest import Api
+from flask_cors import CORS
 from flask_pundit import FlaskPundit
+from authlib.integrations.flask_client import OAuth
+
 
 class JWTFlaskPundit(FlaskPundit):
     """
@@ -19,10 +22,11 @@ class JWTFlaskPundit(FlaskPundit):
         return current_user
 
 
-
 jwt_pundit = JWTFlaskPundit(policies_path="bottle.policies")
 migrate = Migrate()
 ma = Marshmallow()
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 api = Api()
 jwt = JWTManager()
+oauth = OAuth()
+cors = CORS()
