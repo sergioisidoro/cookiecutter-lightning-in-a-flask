@@ -49,6 +49,15 @@ def create_session_and_session_token(user):
     return (token, refresh_token)
 
 
+def build_login_success_response(user):
+    (access_token, refresh_token) = create_session_and_session_token(user)
+    return {
+      "user_id": user.id,
+      "access_token": access_token,
+      "refresh_token": refresh_token
+    }
+
+
 def is_token_revoked(jwt_headers, jwt_payload):
     """
     Checks if the given token is revoked or not. Because we are adding all the

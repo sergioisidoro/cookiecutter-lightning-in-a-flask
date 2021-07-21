@@ -1,7 +1,7 @@
 from flask import Flask
 from bottle.db import db
 from bottle import auth
-from bottle.extensions import migrate, api, jwt, jwt_pundit
+from bottle.extensions import migrate, api, jwt, jwt_pundit, oauth, cors
 from bottle.admin import admin
 from bottle.manage import manage
 from bottle.api import register_api_blueprints
@@ -41,6 +41,8 @@ def configure_extensions(app):
     jwt.init_app(app)
     jwt_pundit.init_app(app)
     admin.init_app(app)
+    oauth.init_app(app)
+    cors.init_app(app)
 
 
 def configure_apispec(app):

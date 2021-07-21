@@ -1,3 +1,4 @@
+from typing import Optional
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask_jwt_extended import jwt_required
@@ -16,8 +17,7 @@ users_api_blueprint = Blueprint(
 @users_api_blueprint.route('/')
 class Users(MethodView):
 
-    decorators = [jwt_required()]
-
+    @jwt_required()
     @users_api_blueprint.arguments(UserQueryArgsSchema)
     @users_api_blueprint.response(200, UserSchema(many=True))
     def get(self, args):
@@ -26,14 +26,15 @@ class Users(MethodView):
         users = user_query.filter_by(**args)
         return users
 
+    @jwt_required(optional=True)
     @users_api_blueprint.arguments(UserCreateSchema)
     @users_api_blueprint.response(201, UserSchema)
     def post(self, new_data):
         """Add a new user"""
         user = User(**new_data)
-        # Warn - Assumption that anyone can create a user for registration.
-        # Please evaluate this on case by case.
-        # So this block is a placehoder and currently unaccessible, since
+        # Warn - Assumption that any (non authenticated) user can
+        # create a user for registration. Please evaluate this on case by case.
+        # This block is a placehoder and currently unaccessible, since
         # create authorize create will always return True.
         if not jwt_pundit.authorize(user, action='create'):
             return "Unauthorized", 401  # pragma: no cover

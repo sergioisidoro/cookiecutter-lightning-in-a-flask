@@ -20,6 +20,9 @@ flask-pundit = {editable = true, git = "https://github.com/sergioisidoro/flask-p
 pytest-cov = "*"
 freezegun = "*"
 flask-admin = "*"
+authlib = "*"
+requests = "*"
+flask-cors = "*"
 
 [dev-packages]
 pytest = "*"
