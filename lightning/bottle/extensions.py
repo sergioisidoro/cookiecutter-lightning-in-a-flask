@@ -30,3 +30,18 @@ api = Api()
 jwt = JWTManager()
 oauth = OAuth()
 cors = CORS()
+
+
+# # OAUTH REGISTER
+# # Note server_metadata_url is important to get appropriate information
+# # for the userinfo endpoint
+# oauth.register(
+#     name='auth0',
+#     client_id='####',
+#     client_secret='####',
+#     server_metadata_url='###',
+#     client_kwargs={
+#       'scope': 'openid profile email',
+#       'token_placement': 'header'
+#       }
+# )
