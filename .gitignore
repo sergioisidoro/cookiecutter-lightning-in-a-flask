@@ -2,3 +2,4 @@ notes
 Pipfile.lock
 production.env
 __pycache__
+.DS_Store

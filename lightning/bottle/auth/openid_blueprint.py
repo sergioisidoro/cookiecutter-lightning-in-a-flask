@@ -7,7 +7,6 @@ from bottle.models import User
 from bottle.auth.helpers import (
   build_login_success_response,
 )
-from authlib.jose import JsonWebSignature
 from authlib.jose import jwt, JsonWebToken, JsonWebKey
 
 open_id_blueprint = Blueprint("oauth", __name__, url_prefix="/oauth")
@@ -59,7 +58,7 @@ def tmp_password_generator():
     return "".join(random.sample(all, 50))
 
 
-def valiate_token_and_get_user_info(client, bearer_auth):
+def validate_token_and_get_user_info(client, bearer_auth):
 
     if not bearer_auth:
         return None
@@ -83,22 +82,22 @@ def valiate_token_and_get_user_info(client, bearer_auth):
 @open_id_blueprint.route('/<provider>/token-exchange/login')
 def exchange_login(provider):
     """
-    Providing an access_token bearer (eg. aquired by an SPA via PKCE)
+    Providing an access_token bearer (eg. acquired by an SPA via PKCE)
     in the Authorization header, make a call to the Openid connect identity
-    server requesting infromation for the user, and return an exchanged token
+    server requesting information for the user, and return an exchanged token
     for logging in to the rest API
     """
     client = oauth.create_client(provider)
     if not client:
         return jsonify({"msg": "Unsupported"}), 400
 
-    userinfo = valiate_token_and_get_user_info(
+    userinfo = validate_token_and_get_user_info(
         client,
         request.headers.get('Authorization')
     )
 
     if not userinfo or not userinfo['email']:
-        return jsonify({"msg": "Isufficient data"}), 400
+        return jsonify({"msg": "Insufficient data"}), 400
 
     user = User.query.filter_by(email=userinfo['email']).one_or_none()
 
@@ -113,22 +112,22 @@ def exchange_login(provider):
 @open_id_blueprint.route('/<provider>/token-exchange/register')
 def exchange_register(provider):
     """
-    Providing a OpenID connect bearer token (eg. aquired by an SPA via PKCE)
+    Providing an access_token bearer (eg. acquired by an SPA via PKCE)
     in the Authorization header, make a call to the Openid connect identity
-    server requesting infromation for the user, and return an exchanged token
-    for registering and logging in a user to the REST API
+    server requesting information for the user, and return an exchanged token
+    for logging in to the rest API
     """
     client = oauth.create_client(provider)
     if not client:
         return jsonify({"msg": "Unsupported"}), 400
 
-    userinfo = valiate_token_and_get_user_info(
+    userinfo = validate_token_and_get_user_info(
         client,
         request.headers.get('Authorization')
     )
 
     if not userinfo or not userinfo['email']:
-        return jsonify({"msg": "Isufficient data"}), 400
+        return jsonify({"msg": "Insufficient data"}), 400
 
     user = User.query.filter_by(email=userinfo['email']).one_or_none()
 
